@@ -13,10 +13,10 @@ async function loadFfmpegInstance(ffmpeg) {
     // We serve those files from /public/ffmpeg (same origin).
     await ffmpeg.load({
         // toBlobURL is used to bypass worker import restrictions.
-        coreURL: await toBlobURL('/ffmpeg/ffmpeg-core.js', 'text/javascript'),
-        wasmURL: await toBlobURL('/ffmpeg/ffmpeg-core.wasm', 'application/wasm'),
+        coreURL: await toBlobURL(`${import.meta.env.BASE_URL}ffmpeg/ffmpeg-core.js`, 'text/javascript'),
+        wasmURL: await toBlobURL(`${import.meta.env.BASE_URL}ffmpeg/ffmpeg-core.wasm`, 'application/wasm'),
         // Multithread core requires a dedicated worker script.
-        workerURL: await toBlobURL('/ffmpeg/ffmpeg-core.worker.js', 'text/javascript'),
+        workerURL: await toBlobURL(`${import.meta.env.BASE_URL}ffmpeg/ffmpeg-core.worker.js`, 'text/javascript'),
     });
     return ffmpeg;
 }
