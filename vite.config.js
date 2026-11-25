@@ -4,6 +4,8 @@ import { resolve } from 'node:path';
 // Minimal config: keep this repo layout, bundle main.js graph,
 // and serve static assets (like ipod_manager.js/.wasm) from /public.
 export default defineConfig({
+  // GitHub Pages serves this project from /tunesreloaded/, not the domain root.
+  base: '/tunesreloaded/',
   build: {
     rollupOptions: {
       input: {
