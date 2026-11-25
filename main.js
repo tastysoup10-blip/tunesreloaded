@@ -543,14 +543,19 @@ document.addEventListener('DOMContentLoaded', async () => {
     log('TunesReloaded initialized');
 
     // Check for required web features (no browser sniffing — any browser with these APIs works)
+    // File System Access is required for folder-based iPod connection.
+    // WebUSB is only used by the optional FirewireGuid setup flow, so its
+    // absence must not disable the main Connect iPod button.
     const requiredFeatures = [];
     if (!('showDirectoryPicker' in window)) requiredFeatures.push('File System Access API');
-    if (!navigator.usb) requiredFeatures.push('WebUSB');
     if (requiredFeatures.length > 0) {
         isBrowserSupported = false;
         log(`Missing required features: ${requiredFeatures.join(', ')}. Try a browser that supports these (e.g. Chrome, Edge, Brave).`, 'error');
         const btn = document.getElementById('connectBtn');
         if (btn) btn.disabled = true;
+    }
+    if (!navigator.usb) {
+        log('WebUSB is unavailable. Folder connection can still work, but automatic FirewireGuid setup may not be available.', 'warning');
     }
 
     // Show welcome overlay on first visit, or show browser compat warning if unsupported
